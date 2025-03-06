@@ -32,7 +32,8 @@
     - 폴더에 모아놓고, 설치할 VMware에 iso 등록 후 부팅
     - 쭉쭉 다음다음 누르며 설치
     - 설치 완료되면 다시시작 버튼 클릭
-        
+
+## SERVER         
 - root 사용자 활성화
     - 바탕화면 우클릭 -> 터미널로 열기
     ```bash
@@ -115,3 +116,51 @@
     - Server 스냅숏
         - VM -> Snapshot -> Snapshot Manager
         - Take snapshot -> 생성 후 Close
+
+## SERVER B
+
+- live-server-amd64 iso 삽입
+- 쭉쭉쭉 엔터키 눌러 진행
+- 아이디 및 서버명 설정 후 쭉쭉 진행
+- TEXT 모드에서 진행
+    
+```bash
+clear
+cd /etc/apt/sources.list.d/
+ls
+sudo nano ubuntu.sources
+
+3행의 Suites: noble 만 남기고 뒤에 다 지우기
+Ctrl + X , Y 엔터
+sudo apt update 로 적용
+```
+
+```bash
+ip addr # 네트워크 보기
+clear
+cd /etc/netplan/
+ls
+sudo nano 50-cloud-init.yaml
+```
+
+```bash
+network:
+    version: 2
+    ethernets:
+        ens32:
+            dhcp4: no
+            address: [192.168.111.200/24]
+            gateway4: 192.168.111.2
+            nameservers:
+                addresses: [192.168.111.2]
+    
+```
+- CTRL + X , Y , Enter
+    
+```bash
+sudo su - root
+passwd
+'passwordpassword' x2회
+
+reboot
+```
