@@ -33,7 +33,7 @@
     - 쭉쭉 다음다음 누르며 설치
     - 설치 완료되면 다시시작 버튼 클릭
 
-## SERVER         
+## SERVER 설치 (ubuntu desktop)
 - root 사용자 활성화
     - 바탕화면 우클릭 -> 터미널로 열기
     ```bash
@@ -117,7 +117,7 @@
         - VM -> Snapshot -> Snapshot Manager
         - Take snapshot -> 생성 후 Close
 
-## SERVER B
+## SERVER B 설치 (ubuntu live server amd64)
 
 - live-server-amd64 iso 삽입
 - 쭉쭉쭉 엔터키 눌러 진행
@@ -145,7 +145,6 @@ sudo nano 50-cloud-init.yaml
 
 ```bash
 network:
-    version: 2
     ethernets:
         ens32:
             dhcp4: no
@@ -153,6 +152,7 @@ network:
             gateway4: 192.168.111.2
             nameservers:
                 addresses: [192.168.111.2]
+    version: 2
     
 ```
 - CTRL + X , Y , Enter
@@ -164,3 +164,43 @@ passwd
 
 reboot
 ```
+
+- root 사용자로 접속
+
+```bash
+ip addr # 아이피주소 설정확인
+ping -c 3 www.google.com # 네트워크 작동확인
+halt -p # 컴퓨터종료
+```
+
+- DVD 제거 후 메모리 등 설정
+
+## CLIENT (ubuntu-budgie) 설치
+
+- DVD 에 만들어놓은 iso 파일을 넣고 부팅
+- 건드릴거 없이 쭉쭉 다음버튼을 누르고 설치해준 다음 다시시작을 실행.
+
+- ENTER 후 DVD 자동제거
+
+- 초기 로그인 후 세팅
+- 왼쪽 위 새모양 아이콘 클릭 -> 4번째 칸의 Software Sources -> Updates 탭의 auto update , Notify ... 두개 NEVER 로 변경
+
+```bash
+cd /etc/apt/sources.list.d/
+ls
+sudo nano ubuntu.sources
+
+3행의 Suites: noble 만 남기고 뒤에 다 지우기
+sudo apt update
+```
+- 다시 새 모양 아이콘 클릭 -> 첫번째 칸의 Budgie Control Center -> Power -> Screen Blank : Never
+- Keyboard 탭 -> 101/104 어쩌구 REMOVE
+
+```bash
+sudo apt -y install net-tools
+```
+
+## win client 설치
+
+- 그냥 윈도우 10 or 11 깔듯이 VMWARE 에 깔아주자.
+- 설치 완료 후 VM -> Install VMware Tools 설치 -> 스냅숏 설정
