@@ -105,3 +105,78 @@ mv abc.txt /etc/systemd/    # abc.txt 를 경로로 이동
 mv aaa bbb ccc ddd          # aaa, bbb, ccc 파일을 /ddd 디렉터리로 이동
 mv abc.txt www.txt          # abc.txt 이름을 www.txt로 변경
 ```
+
+- `mkdir` , `rmdir`
+    - makedirectory의 약자로 새로운 디렉터리를 생성한다, 소유권은 생성한 유저에게 있다.
+    - removedirectory 즉, 디렉터리를 삭제하는 명령어
+```bash
+mkdir abc           # 현재 디렉터리 아래에 /abc 디렉터리 생성
+mkdir -p /def/fgh   # /def/fgh 디렉터리를 생성하는데 만약 /fgh 의 부모인 /def 가 없다면 자동 생성해줌. -p : Parents의 약자
+rmdir abc           # abd 디렉터리 삭제
+```
+
+- `cat`
+    - conCATenate의 약자로 파일 내용을 화면에 보여준다. 여러개 파일을 나열하면 파일을 연결해서 보여준다.
+```bash
+cat a.txt b.txt     # a.txt 와 b.txt 를 연결해서 파일의 내용을 화면에 보여줌
+```
+
+- `head` , `tail`
+    - 텍스트 형식으로 작성된 파일의 앞 10행 또는 마지막 10행만 출력
+```bash
+head /etc/systemd/user.conf     # 앞 10행출력
+head -3 /etc/systemd/user.conf  # 앞 3행출력
+tail -5 /etc/systemd/user.conf  # 마지막 5행출력
+```
+
+- `more`
+    - 텍스트 형식으로 작성된 파일을 페이지 단위로 화면에 출력한다. `Space Bar` 를 누르면 다음페이지로 이동, `B` 를 누르면 앞 페이지, `Q`를 누르면 종료
+```bash
+more /etc/systemd/system.conf
+more +10 /etc/systemd/system.conf
+```
+
+- `less`
+    - more과 유사하나, 화살표, `PageUp` , `PageDown` 키도 사용가능
+
+```bash
+less /etc/systemd/system.conf
+less +10 /etc/systemd/system.conf
+```
+
+- `file`
+    - 해당 파일이 어떤 종류의 파일인지 표시해준다.
+```bash
+file /etc/systemd/system.conf
+file /bin/gzip
+```
+
+- `clear`
+    - 화면 깨끗하게 지우기
+```bash
+clear
+```
+
+
+## 런 레벨
+- init 뒤에 붙는 숫자를 런 레벨 이라고 부른다.
+- 리눅스는 시스템이 가동되는 방법을 7가지 런레벨로 나눌 수 있다.
+
+|런레벨 |영문 모드   |설명                        |비고          |
+|:--:   |:--:       |:--:                       |:--:           |
+|0      |Power Off  |종료 모드                   |              |
+|1      |Rescue     |시스템 복구 모드            |단일 사용자 모드|
+|2      |Multi-User |                           |사용하지 않음  |
+|3      |Multi-User |텍스트 모드의 다중 사용자 모드|             |
+|4      |Multi-User |                           |사용하지 않음  |
+|5      |Graphical  |그래픽 모드의 다중 사용자 모드|             |
+|6      |Reboot     |                           |              |
+
+- 일반적으로 런레벨 3번을 Multi-User 모드로 사용한다. 2번과 4번은 우분투에서 사용하지 않지만 호환성을 위해 런레벨 3번과 동일하게 취급한다.
+
+- 런레벨 확인하기
+```bash
+cd /lib/ststemd/system
+ls -l runlevel?.target # ? 는 한 글자를 의미
+# 현재 시스템 설정된 런레벨 : /lib/systemd/system/default.target 체크
+```
