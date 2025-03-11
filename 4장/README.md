@@ -180,3 +180,52 @@ cd /lib/ststemd/system
 ls -l runlevel?.target # ? 는 한 글자를 의미
 # 현재 시스템 설정된 런레벨 : /lib/systemd/system/default.target 체크
 ```
+
+
+- 런 레벨 실습
+
+    - 시스템에 설정된 런 레벨 변경해보기
+
+    1. 현재 설정된 런레벨 확인
+        ```bash
+        ls -l /lib/systemd/system/default.target
+        systemctl get.default 
+        ```
+        
+    2. 텍스트 모드로 부팅되도록 런 레벨변경해보기
+        ```bash
+        ln -sf /lib/systemd/system/multi-user.target /lib/systemd/system/default.target
+        ls -l /lib/systemd/system/default.target
+
+        systemctl set-default multi-user.target # 이 방법도 가능
+        ```
+
+    3. `Tab` 키 , 자동완성. 개꿀. 한/영 전환은 맥과 같이 `SHIFT`+`SPACE`
+        - 화살표 위, 아래 키로 히스토리 체크가능
+        ```bash
+
+        history # 현재 명령어 히스토리 보여줌
+        history -c # 히스토리 클리어
+        ```
+
+
+## 에디터 사용
+
+- gedit 사용하기 (윈도우의 메모장 느낌)
+    - 터미널
+    ```bash
+    gedit   
+
+    # 실행 안될 시
+    apt install gedit
+    ```
+
+- nano 에디터
+    - 터미널
+    ```bash
+    nano
+
+    ##### 적당히 내용입력후 `Ctrl` + `X`
+
+    nano -c test.txt # 위치정보 자동으로 보여주는 방식으로 오픈
+    ```    
