@@ -229,3 +229,5 @@ ls -l runlevel?.target # ? 는 한 글자를 의미
 
     nano -c test.txt # 위치정보 자동으로 보여주는 방식으로 오픈
     ```    
+
+-
