@@ -247,4 +247,23 @@ ls -l runlevel?.target # ? 는 한 글자를 의미
     - `i` , `a` : 입력(insert) 혹은 추가(append)  
     - :wq : `ESC` 후 :wq 입력 시 저장 후 종료
     - 라인명령 모드 -> :i (취소) , :w (저장) , :q (종료)
+    - :%s/q/qweqwe  -> q 를 모두 qweqwe 로 치환하라
 
+- 마운트 , CD/DVD , USB의 활용
+
+    ```bash
+    mount //  마운트정보확인
+    umount /dev/cdrom   // 기존마운트해제 , 오류나도 됨
+    ```
+    - /dev/cdrom == /dev/sr0 , 즉 CD/DVD 장치를 /dev/cdrom 으로 이해해도 무관
+
+    - cp /boot/con* .    -> /boot/con~~파일을 현재 디렉터리(.) 에 복사
+
+
+## 리눅스에서 ISO 파일 생성
+
+```bash
+
+apt -y install genisoimage
+genisoimage -r -J -o boot.iso /boot
+```
