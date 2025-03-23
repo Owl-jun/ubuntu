@@ -267,3 +267,107 @@ ls -l runlevel?.target # ? 는 한 글자를 의미
 apt -y install genisoimage
 genisoimage -r -J -o boot.iso /boot
 ```
+
+# 사용자와 그룹관련 명령어
+
+1. adduser
+```bash
+adduser newuser1            # newuser1 이라는 이름의 사용자생성
+    신규 비밀번호 :          # 암호 생성
+    신규 비밀번호 재입력 :   
+    이름 [ ] :              # 여기서부터 생략가능 
+    방 번호 [ ]
+    직장 전화번호 [ ]
+    집 전화번호 [ ]
+    기타 [ ]
+    정보가 올바릅니까? [Y/n]
+
+adduser -uid 1111 newuser2  # newuser2 생성 , 사용자 ID 1111
+
+adduser -gid 1000 newuser3  # newuser3 생성 , 그룹 ID 1000번에 포함시킴
+
+
+adduser -home /newhome newuser4 # 생성과 동시에 홈 디렉터리를 /newhome 으로지정
+
+adduser -shell /bin/sch newuser5 # 생성과 동시에 기본 셸을 /bin/sch로 지정
+```
+    
+보통 암호는 8글자 이상 사전에 없는 단어로 지정하자.
+
+2. passwd
+    
+    일반 사용자 : 본인의 비번만 지정/변경
+    root 사용자 : passwd 사용자이름 명령으로 모든사용자 관리 가능
+
+```bash
+passwd newuser1     # newuser1 비번지정 (root 로그인시)
+```
+
+3. usermod
+
+    사용자의 속성을 변경한다.
+```bash
+usermod --shell /bin/sch newuser1   # 기본셸변경
+usermod --groups ubuntu newuser1    # 사용자 보조그룹에 ubuntu 그룹 추가
+```
+
+4. userdel
+    사용자를 삭제한다.
+```bash
+userdel newuser2    # 삭제한다. 단, 홈 디렉터리는 삭제안됨
+userder -r newuser3 # 홈 디렉터리까지 삭제
+```
+
+5. chage(CHange AGE)
+    
+    암호를 주기적으로 변경하도록 설정
+```bash
+chage -l newuser1   # 해당 ID에 설정된 사항 확인
+chage -m 2 newuser1 # 한번 설정 후 최소사용일자, (여기선 최소 2일은 사용해야함)
+
+chage -M 30 newuser1 # 이 암호를 사용할 수 있는 최대일자. (30일 후 변경해야됨)
+
+chage -E 2030/12/12 newuser1 # 암호 만료날짜 (2030/12/12 만료)
+
+chage -W 10 newuser1    # 암호 만료 전 경고날짜, 기본값 7일
+```
+
+6. groups
+
+    사용자 소속 그룹표시
+```bash
+groups  # 현재 사용자 소속그룹 보여줌
+groups newuser1 # 해당 사용자 그룹보여줌
+```
+
+7. groupadd
+
+    새로운 그룹 생성
+```bash
+groupadd newgroup1
+groupadd --gid 2222 newgroup2   # 그룹id 2222 인 그룹생성
+```
+
+8. groupmod
+
+    그룹 속성 변경
+```bash
+groupmod --new-name mygroup1 newgroup1  # 그룹이름 my -> new로 변경
+```
+
+9. groupdel
+
+    그룹 삭제
+```bash
+groupdel newgroup2 # 해당 그룹을 주요그룹으로 지정한 사용자가 없다면 그룹삭제
+```
+
+10. gpasswd
+
+    그룹 비번 설정 혹은 그룹관리 수행
+```bash
+gpasswd mygroup1                # 그룹 암호지정
+gpasswd -A newuser1 mygroup1    # user를 그룹의 관리자로 지정
+gpasswd -a newuser4 mygroup1    # user를 그룹의 사용자로 추가
+gpasswd -d newuser4 mygroup1    # user를 그룹에서 제거
+```
