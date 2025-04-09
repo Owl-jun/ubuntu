@@ -371,3 +371,37 @@ gpasswd -A newuser1 mygroup1    # user를 그룹의 관리자로 지정
 gpasswd -a newuser4 mygroup1    # user를 그룹의 사용자로 추가
 gpasswd -d newuser4 mygroup1    # user를 그룹에서 제거
 ```
+
+
+# 허가권, 소유권
+
+- 3bit씩 3칸이 존재.
+
+|-|User|-|-|Group|-|-|Other|- |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+|r|w|-|r|-|-|r|-|-|
+|4|2|0|4|0|0|4|0|0|
+
+- setuid , setgid , sticky
+    - root , group 등의 허가권을 잠시 빌려주겠다.
+    - rw`s`r-xr-- : 4754 (맨 앞 4가 setuid를 뜻함)
+    - rwxr-`s`r-- : 2754 (맨 앞 2이 setgid를 뜻함)
+    - rwxr--r-t   : 1745 (맨 앞 1이 sticky를 뜻함)
+    - 대문자 S, T 가 위치할 경우는 실행권한이 없음을 뜻함, 숫자는 동일
+
+- 3bit 씩 끊어읽자, 만약 허가권이 754 -> rwx r-x r-- 라는 뜻
+- 허가권 변경 명령어 `chmod`
+```bash
+chmod 777 sample.txt
+ls -l sample.txt
+
+chmod u+wx sample.txt # User 에게 w x 기능 허가하라
+chmod u-r sample.txt  # User 에게 r 기능 삭제하라
+```
+
+- 소유권
+```bash
+chown user1 sample.txt
+chown user1:ubuntuGroup sample.txt
+chgrp ubuntu sample.txt
+```
