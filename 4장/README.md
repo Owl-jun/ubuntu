@@ -423,3 +423,64 @@ chgrp ubuntu sample.txt
     ```
 
     - dpkg 의 단점 : 의존성
+    - 어떤 deb 파일을 설치할 때 다른 패키지가 필요하다면, 의존성 문제로 다운이 되지않는 경우가 있는데, 이를 간편하게 해결하고자 나온 것이 `apt` 이다
+
+    - `apt`
+
+    ```bash
+    apt -y install 패키지이름   # -y : yesno 자동yes처리
+    apt update                 # etc/apt/sources.list 파일 업데이트
+
+    apt remove 패키지이름
+    apt purge 패키지이름
+    apt autoremove
+
+    apt clean   # 내려받은 파일 제거
+    apt autoclean
+
+    apt-cache show 패키지이름       #패키지정보
+    apt-cache depends 패키지이름    #의존성정보
+    apt-cache rdepends 패키지이름   #역의존성정보
+    ```
+
+    - 파일압축
+
+    `xz`
+    ```bash
+    xz 파일명  # 기존파일 삭제 후 압축파일 파일명.xz 생성
+    xz -d 파일이름.xz   # decomp 압축풀기
+    xz -l 파일이름.xz   # 압출 파일의 목록 및 압축률    list
+    xz -k 파일이름      # 압축 후 기존 파일 삭제하지않음 keep
+    ```
+    `bzip2`
+    ```bash
+    bzip2 파일이름  # 압축
+    bzip2 -d 파일이름.bz2   # 압축풀기
+    bzip2 -k 파일이름 # keep
+    ```
+    `zip/unzip` : window 호환
+    ```
+    zip name.zip
+    unzip name.zip
+    ```
+
+    - 원래 압축은 파일 압축 -> 압축된 파일 묶기 순서이다.
+
+    - 파일 묶기
+    `tar`
+    ``` bash
+    c -> 묶음생성
+    x -> 묶인 파일 풀기
+    t -> 묶음 풀기 전 묶인 경로 보여줌
+    C -> 지정된 디렉터리에 압축풀기
+
+    f -> 묶음 파일 이름 지정 (필수)
+    v -> 묶는 과정보여줌
+    J -> tar + xz
+    z -> tar + gzip
+    j -> tar + bzip2
+
+    예)
+    tar xvfJ 파일이름.tar.xz 
+    tar xvfj 파일이름.tar.bz2
+    ```
