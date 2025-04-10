@@ -405,3 +405,21 @@ chown user1 sample.txt
 chown user1:ubuntuGroup sample.txt
 chgrp ubuntu sample.txt
 ```
+
+- 심볼릭 링크과 하드링크
+    - 하드링크 : 원본 그 자체 CPP의 레퍼런스와 비슷한 개념으로 이해
+    - 심볼릭링크 : 윈도우의 바로가기 시스템, 원본 파일이 이동되면 연결이 끊어짐
+
+
+- dpkg
+    - 데비안 리눅스에서 설치 후 바로 실행할 수 있는 설치파일 제공, *.deb (패키지)
+    ```bash
+    dpkg -i 이름.deb    #설치
+    dpkg -r             #삭제
+    dpkg -P 이름        #삭제 및 설정파일까지 제거
+    dpkg -l 이름        #패키지 정보 보여줌
+    dpkg -L 이름        #패키지가 설치한 파일 목록 보여줌
+    pkg --info 패키지파일이름.deb   # 패키지 파일 정보
+    ```
+
+    - dpkg 의 단점 : 의존성
