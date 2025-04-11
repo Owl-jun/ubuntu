@@ -484,3 +484,52 @@ chgrp ubuntu sample.txt
     tar xvfJ 파일이름.tar.xz 
     tar xvfj 파일이름.tar.bz2
     ```
+
+# 파일 검색
+
+- `find`
+``` bash
+find /etc -name "*.conf"
+find /home -user ubuntu #소유자 ubuntu 인 파일 검색
+find ~ -perm 644 # 허가권이 644 인 파일검색
+find /usr/bin -size +10k -size -100k # 10kb~100kb 파일검색
+
+find ~ -size 0k -exec ls -l { } \; # 파일크기 0k 인 파일 목록 상세히 출력
+find /home -name "*.swp" -exec rm { } \; # .swp 파일 찾아서 지워버리기
+
+which
+whereis
+locate
+```
+
+# 예약 명령
+
+- `cron` : 주기적인 작업 예약
+```bash
+분 시 일 월 요일 사용자 실행명령
+00 05 1 * * root cp -r /home /backup
+```
+
+- `at` : 1회성 작업 예약
+```bash
+at 3:00am tomorrow
+at 11:00pm January 30
+at now + 1 hours
+
+at> 프롬프트에 예약명령어 입력 후 `Enter` 입력
+완료되면 ctrl + D 누르기
+확인 : at -l
+취소 : atrm 작업번호
+```
+
+# 네트워크 관련 명령어
+- `nm-connection-editor`
+- `nmtui`
+
+위 두가지를 사용해서 수정을 한 후
+
+- `systemctl start/stop/restart/status NetwrokManager` 로 적용
+
+- `ipconfig` , `ip addr` : IP주소 및 정보 출력
+- `nslookup` : DNS 서버 테스트
+- `ping IP주소 or URL` : 네트워크 응답 테스트
