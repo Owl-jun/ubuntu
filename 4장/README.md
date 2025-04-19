@@ -618,3 +618,57 @@ at> 프롬프트에 예약명령어 입력 후 `Enter` 입력
     ls -l /boot)
     -> 부트로더 확인 (cat /boot/grub/grub.cfg)
     ```
+
+# RAID
+
+- RAID Linear : 직렬, 순차적저장
+- RAID
+    - 0 : 2개이상 동시저장 (가장빠름)
+    - 1 : 2개 동시저장 결함 허용제공 (Mirroring)
+    - 5 : 패리티(XOR로 결함시 데이터 예측) , 3개이상
+    - 6 : 2개의 패리티로 결함데이터 예측 , 4개이상
+
+- 파티션 만들기 (VMware 로 디스크7개 생성 (SCSI))
+```bash
+fdisk /dev/sdb  [Disk 선택]
+Command : n     [new 파티션 분할]
+Select : p      [Primary]
+Partition number : 1    [파티션번호]
+First sector : Enter    []
+Last sector : Enter     []
+Command : t             [시스템 유형]
+Hex Code : fd           [Linux raid autodetect 유형번호]
+Command : p             [설정 내용 확인]
+Command : w             [설정 내용 저장]
+```
+- mdadm 명령 (RAID 장치 생성 및 관리)
+```bash
+--create /dev/md0   # md0 장치에 RAID 생성
+--level = 0         # RAID 번호
+--raid-devices=2 /dev/sdb1 /dev/sdc1 #2개의 디스크를 사용
+mdadm --stop /dev/md9   # md9 RAID 장치 중지
+mdadm --run /dev/md9
+mdadm --detail /dev/md9 # 상세내역출력
+```
+
+- 파티션 장치 파일시스템 생성 (포맷)
+```bash
+mkfs.ext4 /dev/md0
+mkdir /raid0
+mount /dev/md0 /raid0
+df
+```
+
+- 부팅시 항상 마운트 되도록 설정
+``` bash
+nano /etc/fstab
+
+마지막행
+/dev/md0    /raid0  ext4    defaults    0   0
+작성 후 저장
+
+systemctl daemon-reload
+
+## 최종확인
+mdadm --detail /dev/md0
+```
