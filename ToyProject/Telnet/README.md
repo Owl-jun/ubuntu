@@ -46,6 +46,7 @@ ufw allow 23/tcp        # 23번 포트 허용
 
 - PowerShell 로 접속하게 되면 한글 깨짐 현상이 일어난다.
 - 해결을 위해 iPuTTY를 활용하여 접속했다.
+    - https://github.com/iPuTTY/iPuTTY/releases    
 
 <img src="tn0002.png" width=500>
 <img src="tn0003.png" width=500>
