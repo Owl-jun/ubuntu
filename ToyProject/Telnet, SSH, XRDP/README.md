@@ -1,5 +1,7 @@
 
-### VM Ware 활용 리눅스 TelNet 서버 구축
+### VM Ware 활용 리눅스 TelNet, SSH, XRDP 서버 구축
+
+### Telnet
 
 #### 관련 패키지 다운로드 (xinetd telnetd)
 ```bash
