@@ -54,3 +54,34 @@ ufw allow 23/tcp        # 23번 포트 허용
 
 
 - 접속이 잘 되는 모습, but 그냥 telnet 서버는 원격으로 접속이 가능하다는 장점이 있지만, 데이터 암호화가 되지않아 데이터 전송 도중 중요한 정보를 탈취 당할 수 있다, **보안이 강화된 텔넷서버나 SSH를 활용해야한다**.
+
+
+## SSH 서버 구현
+
+### 설치
+```bash
+apt -y install openssh-server
+
+# 상시가동 / 재가동 / 가동여부 확인
+systemctl enable ssh
+systemctl restart ssh
+systemctl status ssh
+
+# 포트 열기
+ufw allow 22/tcp
+```
+
+### 외부에서 접속
+```bash
+ssh 사용자명@IP주소
+
+# 예시
+ssh teluser@192.XXX.XXX.XXX
+```
+
+<img src="ssh0001.png" width=500>
+
+### X윈도우를 위한 XRDP 서버
+- apt install xrdp
+- systemctl start xrdp
+- ufw allow 3389/tcp
